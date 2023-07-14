@@ -4,7 +4,8 @@ import { FavoritesPage } from './pages/favorites-page/favorites-page';
 import { LoginPage } from './pages/login/login-page';
 import { OfferPage } from './pages/offer/offer-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
-import { AppRoute } from './const';
+import { PrivateRoute } from './components/private-route/private-route';
+import { AppRoute, AuthorizationStatus } from './const';
 import { Preferences } from './const';
 
 export const App = (): JSX.Element => (
@@ -20,7 +21,13 @@ export const App = (): JSX.Element => (
       />
       <Route
         path={AppRoute.Favorites}
-        element={<FavoritesPage />}
+        element={
+          <PrivateRoute
+            authorizationStatus={AuthorizationStatus.NoAuth}
+          >
+            <FavoritesPage/>
+          </PrivateRoute>
+        }
       />
       <Route path={AppRoute.Offer} element={<OfferPage />}>
         <Route path=':id' element={<OfferPage />}/>
