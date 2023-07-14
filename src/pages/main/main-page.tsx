@@ -1,5 +1,6 @@
 import {PlaceCard} from '../../components/place-card/place-card.tsx';
 import { Logo } from '../../components/logo/logo.tsx';
+import { Helmet } from 'react-helmet-async';
 
 type MainScreenProps = {
   placesCount: number;
@@ -33,6 +34,9 @@ export const MainPage = ({placesCount}: MainScreenProps): JSX.Element => (
     </header>
 
     <main className="page__main page__main--index">
+      <Helmet>
+        <title>6 городов</title>
+      </Helmet>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">

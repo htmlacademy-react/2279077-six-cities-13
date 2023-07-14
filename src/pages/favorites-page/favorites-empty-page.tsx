@@ -1,4 +1,5 @@
 import { Logo } from '../../components/logo/logo';
+import { Helmet } from 'react-helmet-async';
 
 export const FavoritesEmptyPage = (): JSX.Element => (
   <div className="page page--favorites-empty">
@@ -28,6 +29,9 @@ export const FavoritesEmptyPage = (): JSX.Element => (
     </header>
 
     <main className="page__main page__main--favorites page__main--favorites-empty">
+      <Helmet>
+        <title>Избранное</title>
+      </Helmet>
       <div className="page__favorites-container container">
         <section className="favorites favorites--empty">
           <h1 className="visually-hidden">Favorites (empty)</h1>

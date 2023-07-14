@@ -1,4 +1,5 @@
 import { Logo } from '../../components/logo/logo';
+import { Helmet } from 'react-helmet-async';
 
 export const LoginPage = (): JSX.Element => (
   <div className="page page--gray page--login">
@@ -11,6 +12,9 @@ export const LoginPage = (): JSX.Element => (
     </header>
 
     <main className="page__main page__main--login">
+      <Helmet>
+        <title>Авторизация</title>
+      </Helmet>
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>

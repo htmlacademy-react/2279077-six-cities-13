@@ -1,4 +1,5 @@
 import { Logo } from '../../components/logo/logo';
+import { Helmet } from 'react-helmet-async';
 
 export const OfferPage = (): JSX.Element => (
   <div className="page">
@@ -22,6 +23,9 @@ export const OfferPage = (): JSX.Element => (
     </header>
 
     <main className="page__main page__main--offer">
+      <Helmet>
+        <title>Страница товара</title>
+      </Helmet>
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
