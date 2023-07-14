@@ -1,4 +1,4 @@
-export const OfferNotLoggedPage = (): JSX.Element => (
+export const OfferPage = (): JSX.Element => (
   <div className="page">
     <header className="header">
       <div className="container">
