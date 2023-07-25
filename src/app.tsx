@@ -9,18 +9,21 @@ import { PrivateRoute } from './components/private-route/private-route';
 import { AppRoute, AuthorizationStatus } from './const';
 import { Offer } from './types/offer';
 
-type AppProps = {
-  placesCount: number;
+type AppScreenProps = {
   offers: Offer[];
 }
 
-export const App = ({placesCount, offers}: AppProps): JSX.Element => (
+export const App = ({offers}: AppScreenProps): JSX.Element => (
   <HelmetProvider>
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage placesCount={placesCount} />}
+          element={
+            <MainPage
+              offers={offers}
+            />
+          }
         />
         <Route
           path={AppRoute.Login}

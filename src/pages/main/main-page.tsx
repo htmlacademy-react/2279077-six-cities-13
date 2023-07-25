@@ -1,12 +1,13 @@
-import {PlaceCard} from '../../components/place-card/place-card.tsx';
 import { Logo } from '../../components/logo/logo.tsx';
+import { CardsList } from '../../components/cards-list/cards-list.tsx';
+import { Offer } from '../../types/offer.ts';
 import { Helmet } from 'react-helmet-async';
 
 type MainScreenProps = {
-  placesCount: number;
+  offers: Offer[];
 };
 
-export const MainPage = ({placesCount}: MainScreenProps): JSX.Element => (
+export const MainPage = ({offers}: MainScreenProps): JSX.Element => (
   <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
@@ -94,9 +95,9 @@ export const MainPage = ({placesCount}: MainScreenProps): JSX.Element => (
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              {Array.from(Array(placesCount).keys()).map((number) => <PlaceCard key={number} />)}
-            </div>
+            <CardsList
+              offers={offers}
+            />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
