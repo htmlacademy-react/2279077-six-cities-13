@@ -7,15 +7,20 @@ import { OfferPage } from './pages/offer/offer-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
 import { PrivateRoute } from './components/private-route/private-route';
 import { AppRoute, AuthorizationStatus } from './const';
-import { Setting } from './const';
+import { Offer } from './types/offer';
 
-export const App = (): JSX.Element => (
+type AppProps = {
+  placesCount: number;
+  offers: Offer[];
+}
+
+export const App = ({placesCount, offers}: AppProps): JSX.Element => (
   <HelmetProvider>
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage placesCount={Setting.PlacesCount} />}
+          element={<MainPage placesCount={placesCount} />}
         />
         <Route
           path={AppRoute.Login}
