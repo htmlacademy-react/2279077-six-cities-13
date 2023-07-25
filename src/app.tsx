@@ -41,9 +41,10 @@ export const App = ({offers, favoritesOffers, detailsOffers}: AppScreenProps): J
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Offer} element={<OfferPage detailsOffers={detailsOffers}/>}>
-          <Route path=':id' element={<OfferPage detailsOffers={detailsOffers}/>}/>
-        </Route>
+        <Route
+          path={AppRoute.Offer}
+          element={<OfferPage detailsOffers={detailsOffers}/>}
+        />
         <Route
           path='*'
           element={<NotFoundPage />}
