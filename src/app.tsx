@@ -1,7 +1,7 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { MainPage } from './pages/main/main-page';
-import { FavoritesPage } from './pages/favorites-page/favorites-page';
+import FavoritesPage from './pages/favorites-page/favorites-page';
 import { LoginPage } from './pages/login/login-page';
 import { OfferPage } from './pages/offer/offer-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
@@ -11,9 +11,10 @@ import { Offer } from './types/offer';
 
 type AppScreenProps = {
   offers: Offer[];
+  favoritesOffers: Offer[];
 }
 
-export const App = ({offers}: AppScreenProps): JSX.Element => (
+export const App = ({offers, favoritesOffers}: AppScreenProps): JSX.Element => (
   <HelmetProvider>
     <BrowserRouter>
       <Routes>
@@ -35,7 +36,7 @@ export const App = ({offers}: AppScreenProps): JSX.Element => (
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.NoAuth}
             >
-              <FavoritesPage/>
+              <FavoritesPage favoritesOffers={favoritesOffers} />
             </PrivateRoute>
           }
         />
