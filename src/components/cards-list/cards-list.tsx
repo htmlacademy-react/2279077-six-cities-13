@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer';
-import { MainPage } from '../../pages/main/main-page';
+import PlaceCard from '../place-card/place-card';
 import { useState } from 'react';
 
 type CardsListProps = {
@@ -12,9 +12,8 @@ function CardsList({offers}: CardsListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) =>
-        <MainPage key={offer.id} offer={offer} onMouseEnterHandler={() => setActiveCard(offer.id)} />)}
+        <PlaceCard key={offer.id} offer={offer} onMouseEnterHandler={() => setActiveCard(offer.id)} />)}
     </div>
   );
 }
-
 export {CardsList};
