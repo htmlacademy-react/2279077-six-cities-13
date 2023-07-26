@@ -1,16 +1,14 @@
-export const Preferences = {
-  PlacesCount : 5
-} as const;
-
-export const AppRoute = {
+const AppRoute = {
   Root: '/',
   Favorites: '/favorites',
   Login: '/login',
-  Offer: '/offer/'
+  Offer: '/offer/:id'
 } as const;
 
-export enum AuthorizationStatus {
+enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export {AppRoute, AuthorizationStatus};
