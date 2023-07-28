@@ -1,6 +1,6 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { MainPage } from './pages/main/main-page';
+import MainPage from './pages/main/main-page';
 import FavoritesPage from './pages/favorites-page/favorites-page';
 import { LoginPage } from './pages/login/login-page';
 import OfferPage from './pages/offer/offer-page';
