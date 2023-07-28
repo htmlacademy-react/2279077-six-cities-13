@@ -13,7 +13,6 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     <article className="cities__card place-card" onMouseEnter={onMouseEnterHandler}>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={generatePath(AppRoute.Offer, {id: offer.id})}>
-          <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
