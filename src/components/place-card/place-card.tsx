@@ -1,19 +1,19 @@
 import { Offer } from '../../types/offer';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { MouseEvent } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
-  onMouseEnterHandler: () => void;
+  onMouseEnterHandler: (event: MouseEvent<HTMLLIElement>) => void;
 }
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const {offer, onMouseEnterHandler} = props;
   return (
-    <article className="cities__card place-card" onMouseEnter={onMouseEnterHandler}>
+    <article className="cities__card place-card" onMouseEnter={onMouseEnterHandler} data-id={offer.id}>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={generatePath(AppRoute.Offer, {id: offer.id})}>
-          <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
