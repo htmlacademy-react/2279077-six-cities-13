@@ -2,17 +2,33 @@ import { Offer } from '../../types/offer';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { MouseEvent } from 'react';
+import cn from 'classnames';
 
 type PlaceCardProps = {
   offer: Offer;
+  isNear: boolean;
   onMouseEnterHandler: (event: MouseEvent<HTMLLIElement>) => void;
 }
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {offer, onMouseEnterHandler} = props;
+  const {offer, isNear, onMouseEnterHandler} = props;
   return (
-    <article className="cities__card place-card" onMouseEnter={onMouseEnterHandler} data-id={offer.id}>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article
+      className={cn(
+        {'near-places__card': isNear},
+        {'cities__card': !isNear},
+        'place-card'
+      )}
+      onMouseEnter={onMouseEnterHandler}
+      data-id={offer.id}
+    >
+      <div
+        className={cn(
+          {'near-places__image-wrapper': isNear},
+          {'cities__image-wrapper': !isNear},
+          'place-card__image-wrapper'
+        )}
+      >
         <Link to={generatePath(AppRoute.Offer, {id: offer.id})}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
         </Link>
@@ -33,7 +49,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${offer.rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

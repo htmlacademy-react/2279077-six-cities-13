@@ -8,14 +8,17 @@ import { NotFoundPage } from './pages/not-found-page/not-found-page';
 import { PrivateRoute } from './components/private-route/private-route';
 import { AppRoute, AuthorizationStatus } from './const';
 import { Offer, OfferDetail } from './types/offer';
+import { Comment } from './types/comment';
 
 type AppScreenProps = {
   offers: Offer[];
   favoritesOffers: Offer[];
   detailsOffers: OfferDetail[];
+  nearOffers: Offer[];
+  comments: Comment[];
 }
 
-export const App = ({offers, favoritesOffers, detailsOffers}: AppScreenProps): JSX.Element => (
+export const App = ({offers, favoritesOffers, detailsOffers, nearOffers, comments}: AppScreenProps): JSX.Element => (
   <HelmetProvider>
     <BrowserRouter>
       <Routes>
@@ -43,7 +46,7 @@ export const App = ({offers, favoritesOffers, detailsOffers}: AppScreenProps): J
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage detailsOffers={detailsOffers}/>}
+          element={<OfferPage detailsOffers={detailsOffers} nearOffers={nearOffers} comments={comments}/>}
         />
         <Route
           path='*'
