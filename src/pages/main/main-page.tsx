@@ -84,7 +84,6 @@ function MainPage({offers}: MainScreenProps): JSX.Element {
               </form>
               <CardsList
                 offers={offers}
-                isNear={false}
                 onCardMouseEnter={handleMouseEnterItem}
               />
             </section>
