@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { OfferDetail, City } from '../types/offer';
+import { OfferDetail} from '../types/offer';
 import { NameSpace } from '../const';
 
 const fetchOffers = createAction(`${NameSpace.Offers}/fetch`);
@@ -14,6 +14,6 @@ const fetchFavorites = createAction(`${NameSpace.Favorites}/fetch`);
 
 const dropOffer = createAction(`${NameSpace.Offer}/drop`);
 
-const setActiveCity = createAction<City>(`${NameSpace.Offers}/setActiveCity`);
+const setActiveCity = createAction<string>(`${NameSpace.Offers}/setActiveCity`);
 
 export {fetchOffers, fetchOffer, fetchNearOffers, fetchComments, fetchFavorites, dropOffer, setActiveCity};

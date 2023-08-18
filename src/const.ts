@@ -78,4 +78,4 @@ const CITIES: City[] = [
 
 const DEFAULT_CITY = CITIES[0];
 
-export {AppRoute, AuthorizationStatus, NameSpace, URL_MARKER_CURRENT, URL_MARKER_DEFAULT, DEFAULT_CITY};
+export {AppRoute, AuthorizationStatus, NameSpace, URL_MARKER_CURRENT, URL_MARKER_DEFAULT, DEFAULT_CITY, CITIES};

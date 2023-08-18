@@ -25,7 +25,7 @@ function CardsList({offers, isNear, onCardMouseEnter}: CardsListProps): JSX.Elem
       )}
     >
       {offers.map((offer) =>
-        <PlaceCard key={offer.id} offer={offer} onMouseEnterHandler={handleMouseEnterItem} isNear={isNear} />)}
+        <PlaceCard key={offer.id} offer={offer} onMouseEnterHandler={handleMouseEnterItem} isNear />)}
     </div>
   );
 }

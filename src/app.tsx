@@ -7,52 +7,44 @@ import OfferPage from './pages/offer/offer-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
 import { PrivateRoute } from './components/private-route/private-route';
 import { AppRoute, AuthorizationStatus } from './const';
-import { Offer, OfferDetail } from './types/offer';
-import { Comment } from './types/comment';
 
-type AppScreenProps = {
-  offers: Offer[];
-  favoritesOffers: Offer[];
-  detailsOffers: OfferDetail[];
-  nearOffers: Offer[];
-  comments: Comment[];
+function App(): JSX.Element {
+  return(
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={AppRoute.Root}
+            element={
+              <MainPage />
+            }
+          />
+          <Route
+            path={AppRoute.Login}
+            element={<LoginPage />}
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute
+                authorizationStatus={AuthorizationStatus.NoAuth}
+              >
+                <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Offer}
+            element={<OfferPage />}
+          />
+          <Route
+            path='*'
+            element={<NotFoundPage />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
+  );
 }
 
-export const App = ({offers, favoritesOffers, detailsOffers, nearOffers, comments}: AppScreenProps): JSX.Element => (
-  <HelmetProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={
-            <MainPage
-              offers={offers}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginPage />}
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
-            >
-              <FavoritesPage favoritesOffers={favoritesOffers} />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Offer}
-          element={<OfferPage detailsOffers={detailsOffers} nearOffers={nearOffers} comments={comments}/>}
-        />
-        <Route
-          path='*'
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </BrowserRouter>
-  </HelmetProvider>
-);
+export default App;
