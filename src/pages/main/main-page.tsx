@@ -10,10 +10,12 @@ import { useAppDispatch, useAppSelector } from '../../components/hooks/index.ts'
 import { CitiesList } from '../../components/cities-list/cities-list.tsx';
 import { findOffersByCity, sorting } from '../../utils.ts';
 import { fetchOffers } from '../../store/actions.ts';
+import { Loader } from '../../components/loader/loader.tsx';
 
 function MainPage(): JSX.Element {
   const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
   const [currentSorting, setCurrentSorting] = useState<TSorting>('Popular');
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
   const dispatch = useAppDispatch();
   const currentCity = useAppSelector((state) => state.activeCity);
@@ -33,7 +35,7 @@ function MainPage(): JSX.Element {
     dispatch(fetchOffers);
   }, [dispatch]);
 
-  return(
+  return (
     <div className="page page--gray page--main">
       <Header />
 
@@ -43,30 +45,33 @@ function MainPage(): JSX.Element {
         </Helmet>
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList currentCity={currentCity} />
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersByCity.length} places to stay in {currentCity.name}</b>
-              <Sorting
-                currentSorting={currentSorting}
-                onChange={handleSortChange}
-              />
-              <CardsList
-                offers={offersByCity}
-                onCardMouseEnter={handleMouseEnterItem}
-              />
-            </section>
-            <div className="cities__right-section">
-              <Map
-                offers={offersByCity}
-                activeCard={activeCard}
-                city={currentCity}
-                isMainPage
-              />
+        {
+          isOffersDataLoading ? <Loader /> :
+            <div className="cities">
+              <div className="cities__places-container container">
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{offersByCity.length} places to stay in {currentCity.name}</b>
+                  <Sorting
+                    currentSorting={currentSorting}
+                    onChange={handleSortChange}
+                  />
+                  <CardsList
+                    offers={offersByCity}
+                    onCardMouseEnter={handleMouseEnterItem}
+                  />
+                </section>
+                <div className="cities__right-section">
+                  <Map
+                    offers={offersByCity}
+                    activeCard={activeCard}
+                    city={currentCity}
+                    isMainPage
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+        }
       </main>
     </div>
   );
