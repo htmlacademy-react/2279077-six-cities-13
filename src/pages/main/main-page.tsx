@@ -5,21 +5,20 @@ import { TSorting } from '../../types/sorting.ts';
 import { Offer } from '../../types/offer.ts';
 import { Helmet } from 'react-helmet-async';
 import Map from '../../components/map/map.tsx';
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../components/hooks/index.ts';
+import { useState } from 'react';
+import { useAppSelector } from '../../components/hooks/index.ts';
 import { CitiesList } from '../../components/cities-list/cities-list.tsx';
 import { findOffersByCity, sorting } from '../../utils.ts';
-import { fetchOffers } from '../../store/actions.ts';
 import { Loader } from '../../components/loader/loader.tsx';
+import { getOffers, getOffersLoadingStatus, getActiveCity } from '../../store/offers-process/offers-process.selectors.ts';
 
 function MainPage(): JSX.Element {
   const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
   const [currentSorting, setCurrentSorting] = useState<TSorting>('Popular');
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getOffersLoadingStatus);
 
-  const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.activeCity);
-  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
   const offersByCity = sorting[currentSorting](findOffersByCity(offers, currentCity.name));
 
   const handleMouseEnterItem = (id: string | undefined) => {
@@ -30,10 +29,6 @@ function MainPage(): JSX.Element {
   const handleSortChange = (newSorting: TSorting) => {
     setCurrentSorting(newSorting);
   };
-
-  useEffect(() => {
-    dispatch(fetchOffers);
-  }, [dispatch]);
 
   return (
     <div className="page page--gray page--main">

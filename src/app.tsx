@@ -10,9 +10,20 @@ import { AppRoute } from './const';
 import { useAppSelector } from './components/hooks';
 import HistoryRouter from './components/history-route/history-route';
 import browserHistory from './browser-history';
+import { fetchOffersAction, fetchFavoritesAction, checkAuthAction } from './store/api-actions';
+import { useEffect } from 'react';
+import { store } from './store';
+import { getAuthorizationStatus } from './store/user-process/user-process.selectors';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    store.dispatch(checkAuthAction());
+    store.dispatch(fetchFavoritesAction());
+    store.dispatch(fetchOffersAction());
+  }, []);
+
   return(
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>

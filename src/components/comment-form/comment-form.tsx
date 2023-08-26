@@ -3,7 +3,8 @@ import { postCommentAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { OfferDetail } from '../../types/offer';
 import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus } from '../../const';
-import { dropSendingStatus } from '../../store/actions';
+import { dropSendingStatus } from '../../store/comments-process/comments-process.slice';
+import { getSendingCommentStatus } from '../../store/comments-process/comments-process.selectors';
 
 const ratingMap = {
   '5': 'perfect',
@@ -17,12 +18,11 @@ type CommentFormProps = {
   offerId: OfferDetail['id'];
 }
 
-function CommentForm({ offerId }: CommentFormProps): JSX.Element {
+function CommentForm({offerId}: CommentFormProps): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
-  const [isSubmit, setIsSubmit] = useState(false);
   const dispatch = useAppDispatch();
-  const sendingStatus = useAppSelector((state) => state.sendingCommentStatus);
+  const sendingStatus = useAppSelector(getSendingCommentStatus);
 
   const handleCommentChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(evt.target.value);
@@ -42,18 +42,13 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
     comment.length <= MAX_COMMENT_LENGTH &&
     rating !== '';
 
+  const preparedRatingMap = Object.entries(ratingMap).reverse();
+
   useEffect(() => {
-    switch (sendingStatus) {
-      case RequestStatus.Success:
-        setComment('');
-        setRating('');
-        dispatch(dropSendingStatus());
-        break;
-      case RequestStatus.Pending:
-        setIsSubmit(true);
-        break;
-      default:
-        setIsSubmit(false);
+    if (sendingStatus === RequestStatus.Success) {
+      setComment('');
+      setRating('');
+      dispatch(dropSendingStatus());
     }
   }, [sendingStatus, dispatch]);
 
@@ -66,30 +61,28 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {Object.entries(ratingMap)
-          .reverse()
-          .map(([score, title]) => (
-            <Fragment key={score}>
-              <input
-                className="form__rating-input visually-hidden"
-                name="rating"
-                value={score}
-                id={`${score}-stars`}
-                type="radio"
-                checked={rating === score}
-                onChange={handleRatingChange}
-              />
-              <label
-                htmlFor={`${score}-stars`}
-                className="reviews__rating-label form__rating-label"
-                title={title}
-              >
-                <svg className="form__star-image" width={37} height={33}>
-                  <use xlinkHref="#icon-star" />
-                </svg>
-              </label>
-            </Fragment>
-          ))}
+        {preparedRatingMap.map(([score, title]) => (
+          <Fragment key={score}>
+            <input
+              className="form__rating-input visually-hidden"
+              name="rating"
+              value={score}
+              id={`${score}-stars`}
+              type="radio"
+              checked={rating === score}
+              onChange={handleRatingChange}
+            />
+            <label
+              htmlFor={`${score}-stars`}
+              className="reviews__rating-label form__rating-label"
+              title={title}
+            >
+              <svg className="form__star-image" width={37} height={33}>
+                <use xlinkHref="#icon-star" />
+              </svg>
+            </label>
+          </Fragment>
+        ))}
       </div>
       <textarea onChange={handleCommentChange} value={comment} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
       <div className="reviews__button-wrapper">
@@ -99,7 +92,7 @@ function CommentForm({ offerId }: CommentFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isValid || isSubmit}
+          disabled={!isValid || sendingStatus === RequestStatus.Success}
         >Submit
         </button>
       </div>

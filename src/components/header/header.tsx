@@ -3,11 +3,18 @@ import { useAppSelector, useAppDispatch } from '../hooks';
 import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 import { AuthorizationStatus, AppRoute } from '../../const';
+import { MouseEvent } from 'react';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { getFavorites } from '../../store/favorites-process/favorites-process.selectors';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const favorites = useAppSelector((state) => state.favorites);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const favorites = useAppSelector(getFavorites);
   const dispatch = useAppDispatch();
+  const handleLogoutClick = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
 
   return (
     <header className="header">
@@ -28,10 +35,7 @@ function Header(): JSX.Element {
                   </li>
                   <li className="header__nav-item">
                     <Link
-                      onClick={(evt) => {
-                        evt.preventDefault();
-                        dispatch(logoutAction());
-                      }}
+                      onClick={handleLogoutClick}
                       className="header__nav-link"
                       to={AppRoute.Root}
                     >
