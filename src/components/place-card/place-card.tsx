@@ -1,8 +1,9 @@
 import { Offer } from '../../types/offer';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
 import cn from 'classnames';
+import { BookmarkButton } from '../bookmark-button/bookmark-button';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -12,6 +13,9 @@ type PlaceCardProps = {
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
   const {offer, isNear, onMouseEnterHandler} = props;
+  const [activeFavorite, setActiveFavorite] = useState(offer.isFavorite);
+  const handleBookmarkButtonClick = () => setActiveFavorite((prev) => !prev);
+
   return (
     <article
       className={cn(
@@ -40,12 +44,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <BookmarkButton id={offer.id} isFavorite={activeFavorite} block='place-card' onClick={handleBookmarkButtonClick}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
