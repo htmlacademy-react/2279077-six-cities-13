@@ -6,7 +6,7 @@ import LoginPage from './pages/login/login-page';
 import OfferPage from './pages/offer/offer-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
 import { PrivateRoute } from './components/private-route/private-route';
-import { AppRoute } from './const';
+import { AppRoute, AuthorizationStatus } from './const';
 import { useAppSelector, useAppDispatch } from './components/hooks';
 import HistoryRouter from './components/history-route/history-route';
 import browserHistory from './browser-history';
@@ -20,9 +20,14 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(checkAuthAction());
-    dispatch(fetchFavoritesAction());
     dispatch(fetchOffersAction());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
+    }
+  }, [dispatch, authorizationStatus]);
 
   return(
     <HelmetProvider>
